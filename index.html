@@ -146,7 +146,7 @@
     </footer>
   </div>
 
-  <!-- SCRIPT CORREGIDO: SE ACTIVA ÚNICAMENTE AL HACER CLIC -->
+  <!-- SCRIPT -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       var ctaBtn = document.getElementById('btn-acceso');
@@ -157,21 +157,16 @@
           var isFacebook = (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1) || (ua.indexOf("Instagram") > -1);
           
           if (isFacebook) {
-            // Destino final al que quieres enviar al usuario
             var urlDestino = "https://o.uvixs.com//tr?offer_id=1&aff_id=109"; 
             
-            // Comportamiento para Android
             if (/Android/i.test(ua)) {
-              e.preventDefault(); // Detiene la apertura normal dentro de Facebook
+              e.preventDefault();
               
-              // Limpia el protocolo de la URL de destino para armar el Intent nativo
               var limpiaUrl = urlDestino.replace(/^https?:\/\//, "");
               var intentUrl = "intent://" + limpiaUrl + "#Intent;scheme=https;package=com.android.chrome;end";
               
               window.location.href = intentUrl;
             }
-            // Para iOS (iPhone) el atributo 'download="acceso"' ya presente en el HTML 
-            // forzará al navegador de Instagram/Facebook a abrir una ventana externa de Safari.
           }
         });
       }
