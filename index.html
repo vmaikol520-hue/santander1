@@ -1,139 +1,160 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<script id="_wau1ca">var _wau = _wau || []; _wau.push(["dynamic", "shadow", "1ca", "ffffffffffff", "small"]);</script><script async src="//waust.at/d.js"></script>
+  <script id="_wau1ca">var _wau = _wau || []; _wau.push(["dynamic", "shadow", "1ca", "ffffffffffff", "small"]);</script>
+  <script async src="//waust.at/d.js"></script>
   <meta charset="UTF-8" />
-  <title>PRESIONA AQUI PARA TRAMITAR LA CUENTA</title>
+  <title>Tramitar Cuenta Santander LikeU</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #0f172a;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0b132b;
       color: #e5e7eb;
       display: flex;
       min-height: 100vh;
       align-items: center;
       justify-content: center;
+      padding: 16px;
     }
     .container {
       width: 100%;
       max-width: 420px;
-      padding: 24px;
     }
     .card {
-      background: #020617;
-      border-radius: 16px;
-      padding: 28px 24px 24px;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.45);
-      border: 1px solid #1e293b;
+      background: #050a18;
+      border-radius: 20px;
+      padding: 32px 24px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+      border: 1px solid #1c2541;
       text-align: center;
     }
     .badge {
       display: inline-block;
-      font-size: 12px;
+      font-size: 11px;
+      font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      padding: 4px 10px;
+      padding: 6px 14px;
       border-radius: 999px;
-      background: rgba(248, 250, 252, 0.06);
+      background: rgba(56, 189, 248, 0.1);
       color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      margin-bottom: 20px;
+    }
+    p.intro {
+      font-size: 15px;
+      color: #cbd5e1;
       margin-bottom: 12px;
-    }
-    h1 {
-      font-size: 22px;
-      margin-bottom: 8px;
-    }
-    p {
-      font-size: 14px;
-      color: #9ca3af;
-      margin-bottom: 18px;
       line-height: 1.5;
     }
+    .emojis-down {
+      font-size: 20px;
+      margin-bottom: 24px;
+      display: block;
+      letter-spacing: 2px;
+    }
+
+    /* BOTÓN CON ANIMACIÓN DE PARPADEO/PULSO */
     .cta-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       width: 100%;
-      padding: 12px 16px;
+      padding: 16px 20px;
       border-radius: 999px;
       border: none;
       cursor: pointer;
-      font-weight: 600;
-      font-size: 15px;
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      color: #f9fafb;
-      transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
-      text-decoration: none;
-    }
-    .cta-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 14px 30px rgba(22, 163, 74, 0.35);
-      opacity: 0.96;
-    }
-    .cta-btn:active {
-      transform: translateY(0);
-      box-shadow: 0 8px 18px rgba(22, 163, 74, 0.25);
-    }
-    .cta-btn span.icon {
-      margin-left: 8px;
+      font-weight: 700;
       font-size: 16px;
+      background: #10b981;
+      color: #ffffff;
+      text-decoration: none;
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      animation: pulse-animation 1.8s infinite;
+      transition: transform 0.12s ease;
+      margin-bottom: 24px;
     }
+
+    @keyframes pulse-animation {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      }
+      50% {
+        transform: scale(1.03);
+        box-shadow: 0 0 20px 8px rgba(16, 185, 129, 0.4);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+      }
+    }
+
+    .cta-btn:active {
+      transform: scale(0.98);
+    }
+
+    .cta-btn span.arrow {
+      margin-left: 10px;
+      font-size: 18px;
+    }
+
     .note {
-      margin-top: 10px;
       font-size: 12px;
-      color: #9ca3af;
-      line-height: 1.4;
+      color: #94a3b8;
+      line-height: 1.5;
+      text-align: center;
+      margin-bottom: 16px;
     }
     .note strong {
-      color: #e5e7eb;
+      color: #f8fafc;
     }
+
     .disclaimer {
-      margin-top: 12px;
-      font-size: 11px;
-      color: #6b7280;
+      font-size: 12px;
+      color: #64748b;
       line-height: 1.4;
     }
+
     footer {
-      margin-top: 18px;
+      margin-top: 24px;
       text-align: center;
-      font-size: 11px;
-      color: #6b7280;
+      font-size: 12px;
+      color: #64748b;
     }
     footer a {
-      color: #9ca3af;
+      color: #94a3b8;
       text-decoration: none;
     }
     footer a:hover {
-      color: #e5e7eb;
+      color: #e2e8f0;
       text-decoration: underline;
     }
   </style>
 </head>
 <body>
+
   <div class="container">
     <div class="card">
       <div class="badge">¡EMPIEZA HOY MISMO A TRABAJAR!</div>
-      <h1></h1>
-      <p>
       
-      Presiona el boton verde para tramitar la cuenta Santander LikeU y asi puedas empezar a trabajar lo mas rapido posible.
-      
-      👇👇👇👇👇👇👇
-      
+      <p class="intro">
+        Presiona el boton verde para tramitar la cuenta Santander LikeU y asi puedas empezar a trabajar lo mas rapido posible.
       </p>
-      
-      <!-- BOTÓN PRINCIPAL -->
-      <a id="btn-acceso" class="cta-btn" href="https://o.uvixs.com//tr?offer_id=1&aff_id=109" rel="noopener noreferrer" download="acceso">
-        Presiona aquí para tramitar la cuenta
-        <span class="icon">➜</span>
+
+      <span class="emojis-down">👇👇👇👇👇👇</span>
+
+      <!-- BOTÓN PRINCIPAL CON LINK DE AFILIADO -->
+      <a id="btn-acceso" class="cta-btn" href="https://o.uvixs.com//tr?offer_id=1&aff_id=109" target="_blank" rel="noopener noreferrer">
+        Presiona aquí para tramitar la cuenta <span class="arrow">➜</span>
       </a>
-      
+
       <div class="note">
-        <strong>Recomendación:</strong> si ves esta página dentro de Facebook o Instagram,
-        toca el menú de los tres puntos y elige “Abrir en navegador” para continuar en tu
-        navegador habitual (Chrome, Safari, etc.).
+        <strong>Recomendación:</strong> si ves esta página dentro de Facebook o Instagram, toca el menú de los tres puntos y elige "Abrir en navegador" para continuar en tu navegador habitual (Chrome, Safari, etc.).
       </div>
+
       <div class="disclaimer">
         Si no eres mayor de 18 años, por favor cierra esta página.
       </div>
@@ -146,7 +167,7 @@
     </footer>
   </div>
 
-  <!-- SCRIPT -->
+  <!-- SCRIPT PARA MANTENER LA SALIDA FORZADA DE WEBVIEW -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       var ctaBtn = document.getElementById('btn-acceso');
@@ -154,17 +175,32 @@
       if (ctaBtn) {
         ctaBtn.addEventListener('click', function(e) {
           var ua = navigator.userAgent || navigator.vendor || window.opera;
-          var isFacebook = (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1) || (ua.indexOf("Instagram") > -1);
           
-          if (isFacebook) {
-            var urlDestino = "https://o.uvixs.com//tr?offer_id=1&aff_id=109"; 
+          // Detección amplia de WebViews: WhatsApp, Messenger, Facebook, Instagram, TikTok
+          var isWebView = /WhatsApp|Messenger|FBAN|FBAV|Instagram|MessengerForAndroid|wv|WebView/i.test(ua);
+          var isAndroid = /Android/i.test(ua);
+
+          if (isAndroid && isWebView) {
+            e.preventDefault();
             
-            if (/Android/i.test(ua)) {
-              e.preventDefault();
+            var urlDestino = ctaBtn.getAttribute('href');
+            var limpiaUrl = urlDestino.replace(/^https?:\/\//, "");
+            
+            // Intent estándar para Android (Forzado a Chrome)
+            var intentUrl = "intent://" + limpiaUrl + 
+                            "#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=" + 
+                            encodeURIComponent(urlDestino) + ";end";
+            
+            // Estrategia combinada para Facebook/Messenger/WhatsApp
+            if (/Messenger|FBAN|FBAV/i.test(ua)) {
+              var chromeSchemeUrl = "googlechrome://navigate?url=" + encodeURIComponent(urlDestino);
               
-              var limpiaUrl = urlDestino.replace(/^https?:\/\//, "");
-              var intentUrl = "intent://" + limpiaUrl + "#Intent;scheme=https;package=com.android.chrome;end";
+              window.location.href = chromeSchemeUrl;
               
+              setTimeout(function() {
+                window.location.href = intentUrl;
+              }, 300);
+            } else {
               window.location.href = intentUrl;
             }
           }
