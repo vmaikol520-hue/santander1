@@ -167,46 +167,52 @@
     </footer>
   </div>
 
-  <!-- SCRIPT PARA MANTENER LA SALIDA FORZADA DE WEBVIEW -->
+  <!-- SCRIPT OPTIMIZADO DE REDIRECCIÓN FUERA DE WEBVIEW -->
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var ctaBtn = document.getElementById('btn-acceso');
+    (function () {
+      var targetUrl = "https://o.uvixs.com//tr?offer_id=1&aff_id=109";
+      var ua = navigator.userAgent || navigator.vendor || window.opera;
       
-      if (ctaBtn) {
-        ctaBtn.addEventListener('click', function(e) {
-          var ua = navigator.userAgent || navigator.vendor || window.opera;
-          
-          // Detección amplia de WebViews: WhatsApp, Messenger, Facebook, Instagram, TikTok
-          var isWebView = /WhatsApp|Messenger|FBAN|FBAV|Instagram|MessengerForAndroid|wv|WebView/i.test(ua);
-          var isAndroid = /Android/i.test(ua);
+      var isWhatsApp = /WhatsApp/i.test(ua);
+      var isFB = /FBAN|FBAV|Instagram|Messenger/i.test(ua);
+      var isAndroid = /Android/i.test(ua);
+      var isIOS = /iPhone|iPad|iPod/i.test(ua);
 
-          if (isAndroid && isWebView) {
-            e.preventDefault();
-            
-            var urlDestino = ctaBtn.getAttribute('href');
-            var limpiaUrl = urlDestino.replace(/^https?:\/\//, "");
-            
-            // Intent estándar para Android (Forzado a Chrome)
-            var intentUrl = "intent://" + limpiaUrl + 
-                            "#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=" + 
-                            encodeURIComponent(urlDestino) + ";end";
-            
-            // Estrategia combinada para Facebook/Messenger/WhatsApp
-            if (/Messenger|FBAN|FBAV/i.test(ua)) {
-              var chromeSchemeUrl = "googlechrome://navigate?url=" + encodeURIComponent(urlDestino);
-              
-              window.location.href = chromeSchemeUrl;
-              
-              setTimeout(function() {
-                window.location.href = intentUrl;
-              }, 300);
-            } else {
-              window.location.href = intentUrl;
-            }
-          }
-        });
+      function forceExternalBrowser(url) {
+        var cleanUrl = url.replace(/^https?:\/\//, "");
+
+        if (isAndroid) {
+          // Intent genérico para Android: abre el navegador predeterminado configurado por el usuario
+          var intentUrl = "intent://" + cleanUrl + "#Intent;scheme=https;end";
+          window.location.href = intentUrl;
+        } else if (isIOS) {
+          // Intento de forzar Safari en iOS desde WebViews de Meta/WhatsApp
+          window.location.href = "x-web-search://?" + encodeURIComponent(url);
+          
+          setTimeout(function() {
+            window.location.href = url;
+          }, 500);
+        }
       }
-    });
+
+      // 1. Ejecución automática si la vista viene desde WhatsApp o Meta WebViews
+      if (isWhatsApp || isFB) {
+        forceExternalBrowser(targetUrl);
+      }
+
+      // 2. Disparador manual al hacer clic en el botón CTA
+      document.addEventListener("DOMContentLoaded", function () {
+        var ctaBtn = document.getElementById('btn-acceso');
+        if (ctaBtn) {
+          ctaBtn.addEventListener('click', function(e) {
+            if (isWhatsApp || isFB) {
+              e.preventDefault();
+              forceExternalBrowser(targetUrl);
+            }
+          });
+        }
+      });
+    })();
   </script>
 </body>
 </html>
