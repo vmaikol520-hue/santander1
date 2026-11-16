@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<script id="_wau1ca">var _wau = _wau || []; _wau.push(["dynamic", "shadow", "1ca", "ffffffffffff", "small"]);</script><script async src="//waust.at/d.js"></script>
+  <script id="_wau1ca">var _wau = _wau || []; _wau.push(["dynamic", "shadow", "1ca", "ffffffffffff", "small"]);</script>
+  <script async src="//waust.at/d.js"></script>
   <meta charset="UTF-8" />
   <title>PRESIONA AQUI PARA TRAMITAR LA CUENTA</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -121,7 +122,7 @@
       </p>
       
       <!-- BOTÓN PRINCIPAL -->
-      <a id="btn-acceso" class="cta-btn" href="https://o.uvixs.com//tr?offer_id=1&aff_id=109" target="_blank" rel="noopener noreferrer">
+      <a id="btn-acceso" class="cta-btn" href="https://o.uvixs.com//tr?offer_id=59&aff_id=109" target="_blank" rel="noopener noreferrer">
         Presiona aquí para tramitar la cuenta
         <span class="icon">➜</span>
       </a>
@@ -145,37 +146,60 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      var ctaBtn = document.getElementById('btn-acceso');
-      
-      if (ctaBtn) {
-        ctaBtn.addEventListener('click', function(e) {
-          var ua = navigator.userAgent || navigator.vendor || window.opera;
-          var urlDestino = "https://o.uvixs.com//tr?offer_id=1&aff_id=109";
-          
-          var isMetaApp = (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1) || (ua.indexOf("Instagram") > -1) || (ua.indexOf("Messenger") > -1);
-          var isWhatsApp = (ua.indexOf("WhatsApp") > -1);
+      // ============================================================
+      // ÚNICO LUGAR DONDE SE CONFIGURA EL ENLACE DE AFILIADO
+      // ============================================================
+      var URL_AFILIADO = "https://o.uvixs.com//tr?offer_id=59&aff_id=109";
 
-          // 1. Manejo específico para WhatsApp en Android/iOS
-          if (isWhatsApp) {
+      // Conserva parámetros extra si vienen desde la campaña (ej. sub_id, utm, etc.)
+      function construirUrlFinal(baseUrl) {
+        var queryActual = window.location.search;
+        if (!queryActual || queryActual.length <= 1) return baseUrl;
+        var separador = baseUrl.indexOf("?") !== -1 ? "&" : "?";
+        return baseUrl + separador + queryActual.substring(1);
+      }
+
+      var urlDestino = construirUrlFinal(URL_AFILIADO);
+      var ctaBtn = document.getElementById("btn-acceso");
+
+      if (ctaBtn) {
+        // Sincroniza el href del botón por si se abre con pulsación larga
+        ctaBtn.setAttribute("href", urlDestino);
+
+        ctaBtn.addEventListener("click", function (e) {
+          var ua = navigator.userAgent || navigator.vendor || window.opera || "";
+
+          var isAndroid = /Android/i.test(ua);
+          var isIOS = /iPhone|iPad|iPod/i.test(ua);
+          var isMetaApp = /FBAN|FBAV|FB_IAB|FBIOS|Instagram|Messenger/i.test(ua);
+          var isWhatsApp = /WhatsApp/i.test(ua);
+
+          // 1. ANDROID dentro de Facebook, Messenger, Instagram o WhatsApp
+          if (isAndroid && (isMetaApp || isWhatsApp)) {
             e.preventDefault();
-            if (/Android/i.test(ua)) {
-              // Intent directo a Chrome desde WhatsApp
-              var limpiaUrl = urlDestino.replace(/^https?:\/\//, "");
-              window.location.href = "intent://" + limpiaUrl + "#Intent;scheme=https;package=com.android.chrome;end";
-            } else {
-              // En iOS, abrir con _system fuerza el uso de Safari
-              window.open(urlDestino, '_system');
-            }
+            var sinProtocolo = urlDestino.replace(/^https?:\/\//i, "");
+            var fallback = encodeURIComponent(urlDestino);
+            // Fuerza apertura en Chrome y si no está instalado usa el navegador predeterminado sin perder parámetros
+            window.location.href =
+              "intent://" +
+              sinProtocolo +
+              "#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=" +
+              fallback +
+              ";end";
             return;
           }
 
-          // 2. Manejo para Facebook, Instagram y Messenger
-          if (isMetaApp) {
-            if (/Android/i.test(ua)) {
-              e.preventDefault();
-              var limpiaUrl = urlDestino.replace(/^https?:\/\//, "");
-              window.location.href = "intent://" + limpiaUrl + "#Intent;scheme=https;package=com.android.chrome;end";
-            }
+          // 2. iOS (iPhone/iPad) dentro de Facebook, Messenger, Instagram o WhatsApp
+          if (isIOS && (isMetaApp || isWhatsApp)) {
+            e.preventDefault();
+            var urlSafari = urlDestino.replace(/^https:\/\//i, "x-safari-https://");
+            window.location.href = urlSafari;
+
+            // Respaldo por si la versión de iOS no soporta x-safari-https
+            setTimeout(function () {
+              window.location.href = urlDestino;
+            }, 600);
+            return;
           }
         });
       }
